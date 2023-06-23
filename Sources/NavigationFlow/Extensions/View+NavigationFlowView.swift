@@ -2,16 +2,22 @@ import SwiftUI
 
 public extension View {
 
-    func inNavigationFlowView<Destination: Hashable & Identifiable>(with navigation: Navigation<Destination>) -> some View {
+    func inNavigation<Destination: Identifiable>(
+        with navigation: Navigation<Destination>
+    ) -> AnyView {
         NavigationFlowView(navigation: navigation) {
             self
         }
+        .toAnyView()
     }
 
-    func inRootNavigationFlowView<Destination: Hashable & Identifiable>(with navigation: Navigation<Destination>) -> some View {
+    func inRootNavigation<Destination: Identifiable>(
+        with navigation: Navigation<Destination>
+    ) -> AnyView {
         RootNavigationFlowView(navigation: navigation) {
             self
         }
+        .toAnyView()
     }
 }
 

@@ -7,16 +7,15 @@ public struct CatalogFlowFactory {
 
     public init() {}
 
-    public func view() -> AnyView {
+    public func view() -> some View {
         CatalogFlow(
-            onProductDetailView: { name in
-                ProductDetailFlowFactory().view(name: name)
+            onProductDetailFlow: { name in
+                ProductDetailFlowFactory().flow(name: name)
             },
-            onFilterView: {
-                FilterFlowFactory().view()
+            onFilterFlow: {
+                FilterFlowFactory().flow()
             }
         )
         .view()
-        .toAnyView()
     }
 }

@@ -2,10 +2,11 @@
 
 import SwiftUI
 import FilterFeature
+import NavigationFlow
 
 struct FilterFlowFactory {
 
-    func view() -> AnyView {
-        FilterFlow().view().toAnyView()
+    func flow() -> Flow {
+        FilterFlow()
     }
 }

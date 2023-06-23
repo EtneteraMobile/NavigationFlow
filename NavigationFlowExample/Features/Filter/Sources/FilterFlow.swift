@@ -2,7 +2,7 @@
 import SwiftUI
 import NavigationFlow
 
-enum FilterDestination: Hashable, Identifiable {
+enum FilterDestination: Identifiable {
     case filterDetail(String)
 
     var id: String {
@@ -10,22 +10,22 @@ enum FilterDestination: Hashable, Identifiable {
     }
 }
 
-public struct FilterFlow {
+public struct FilterFlow: Flow {
 
     public init() {}
 
     @ViewBuilder
-    public func view() -> some View {
+    public func view() -> AnyView {
         let navigation = Navigation<FilterDestination> { destination in
             switch destination {
             case .filterDetail(let name):
-                return FilterDetailFlow().view(name: name).toAnyView()
+                return FilterDetailFlow(name: name).view()
             }
         }
 
         let viewModel = FilterViewModel(navigation: navigation)
 
         FilterView(viewModel: viewModel)
-            .inRootNavigationFlowView(with: navigation)
+            .inRootNavigation(with: navigation)
     }
 }

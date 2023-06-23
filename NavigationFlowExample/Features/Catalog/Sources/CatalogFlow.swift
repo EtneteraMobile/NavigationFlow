@@ -2,7 +2,7 @@
 import SwiftUI
 import NavigationFlow
 
-enum CatalogDestination: Hashable, Identifiable {
+enum CatalogDestination: Identifiable {
     case productDetail(String)
     case filters
 
@@ -11,36 +11,36 @@ enum CatalogDestination: Hashable, Identifiable {
     }
 }
 
-public struct CatalogFlow {
+public struct CatalogFlow: Flow {
 
 
-    private let onProductDetailView: (String) -> AnyView
-    private let onFilterView: () -> AnyView
+    private let onProductDetailFlow: (String) -> Flow
+    private let onFilterFlow: () -> Flow
 
     public init(
-        onProductDetailView: @escaping (String) -> AnyView,
-        onFilterView: @escaping () -> AnyView
+        onProductDetailFlow: @escaping (String) -> Flow,
+        onFilterFlow: @escaping () -> Flow
     ) {
-        self.onProductDetailView = onProductDetailView
-        self.onFilterView = onFilterView
+        self.onProductDetailFlow = onProductDetailFlow
+        self.onFilterFlow = onFilterFlow
     }
 
     @ViewBuilder
-    public func view() -> some View {
+    public func view() -> AnyView {
         let navigation = Navigation<CatalogDestination> { destination in
 
             switch destination {
             case .productDetail(let name):
-                return onProductDetailView(name)
+                return onProductDetailFlow(name).view()
 
             case .filters:
-                return onFilterView()
+                return onFilterFlow().view()
             }
         }
 
         let viewModel = CatalogViewModel(navigation: navigation)
 
         CatalogView(viewModel: viewModel)
-            .inRootNavigationFlowView(with: navigation)
+            .inRootNavigation(with: navigation)
     }
 }

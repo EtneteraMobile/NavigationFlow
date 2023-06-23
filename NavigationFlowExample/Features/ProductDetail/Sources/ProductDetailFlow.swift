@@ -8,7 +8,7 @@
 import SwiftUI
 import NavigationFlow
 
-enum ProductDetailDestination: Hashable, Identifiable {
+enum ProductDetailDestination: Identifiable {
     case gallery
 
     var id: String {
@@ -16,27 +16,32 @@ enum ProductDetailDestination: Hashable, Identifiable {
     }
 }
 
-public struct ProductDetailFlow {
+public struct ProductDetailFlow: Flow {
 
-    private let onGallery: () -> AnyView
+    private let name: String
+    private let onGallery: () -> Flow
 
-    public init(onGallery: @escaping () -> AnyView) {
+    public init(
+        name: String,
+        onGallery: @escaping () -> Flow
+    ) {
+        self.name = name
         self.onGallery = onGallery
     }
 
     @ViewBuilder
-    public func view(name: String) -> some View {
+    public func view() -> AnyView {
         let navigation = Navigation<ProductDetailDestination> { destination in
             switch destination {
             case .gallery:
-                return onGallery()
+                return onGallery().view()
             }
         }
 
         let viewModel = ProductDetailViewModel(navigation: navigation, name: name)
 
         ProductDetailView(viewModel: viewModel)
-            .inNavigationFlowView(with: navigation)
+            .inNavigation(with: navigation)
     }
 }
 

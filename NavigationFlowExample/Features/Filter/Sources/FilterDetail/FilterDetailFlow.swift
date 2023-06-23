@@ -2,23 +2,17 @@
 import SwiftUI
 import NavigationFlow
 
-enum FilterDetailDestination: Hashable, Identifiable {
-    case none
+struct FilterDetailFlow: Flow {
 
-    var id: String {
-        String(describing: self)
-    }
-}
-
-class FilterDetailFlow {
+    let name: String
 
     @ViewBuilder
-    func view(name: String) -> some View {
-        let navigation = Navigation<FilterDetailDestination>()
+    func view() -> AnyView {
+        let navigation = Navigation<NoDestination>()
 
         let viewModel = FilterDetailViewModel(navigation: navigation, name: name)
 
         FilterDetailView(viewModel: viewModel)
-            .inNavigationFlowView(with: navigation)
+            .inNavigation(with: navigation)
     }
 }

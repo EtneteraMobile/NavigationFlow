@@ -5,13 +5,12 @@ import NavigationFlow
 
 struct ProductDetailFlowFactory {
 
-    func view(name: String) -> AnyView {
+    func flow(name: String) -> Flow {
         ProductDetailFlow(
+            name: name,
             onGallery: {
-                GalleryFlowFactory().view()
+                GalleryFlowFactory().flow()
             }
         )
-        .view(name: name)
-        .toAnyView()
     }
 }

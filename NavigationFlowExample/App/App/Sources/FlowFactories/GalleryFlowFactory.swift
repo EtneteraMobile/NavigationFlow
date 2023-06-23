@@ -6,7 +6,7 @@ import NavigationFlow
 
 struct GalleryFlowFactory {
 
-    func view() -> AnyView {
-        GalleryFlow().view().toAnyView()
+    func flow() -> Flow {
+        GalleryFlow()
     }
 }
