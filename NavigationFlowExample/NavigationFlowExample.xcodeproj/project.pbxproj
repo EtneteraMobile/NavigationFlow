@@ -11,7 +11,7 @@
 		1F50CE0F2A456EE000FA15F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F50CE0E2A456EE000FA15F4 /* ContentView.swift */; };
 		1F50CE112A456EE100FA15F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F50CE102A456EE100FA15F4 /* Assets.xcassets */; };
 		1F50CE142A456EE200FA15F4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F50CE132A456EE200FA15F4 /* Preview Assets.xcassets */; };
-		1F50CE242A45715100FA15F4 /* NavigationFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 1F50CE232A45715100FA15F4 /* NavigationFlow */; };
+		1FB8AD112A459A9B001750C4 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB8AD102A459A9B001750C4 /* App */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +21,8 @@
 		1F50CE102A456EE100FA15F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F50CE132A456EE200FA15F4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F50CE222A45713900FA15F4 /* NavigationFlow */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NavigationFlow; path = ..; sourceTree = "<group>"; };
+		1F50CE252A457F5B00FA15F4 /* App */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = App; sourceTree = "<group>"; };
+		1F50CE262A457F5B00FA15F4 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F50CE242A45715100FA15F4 /* NavigationFlow in Frameworks */,
+				1FB8AD112A459A9B001750C4 /* App in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,8 +40,10 @@
 		1F50CE002A456EE000FA15F4 = {
 			isa = PBXGroup;
 			children = (
-				1F50CE212A45713900FA15F4 /* Packages */,
+				1F50CE252A457F5B00FA15F4 /* App */,
+				1F50CE262A457F5B00FA15F4 /* Features */,
 				1F50CE0B2A456EE000FA15F4 /* NavigationFlowExample */,
+				1F50CE212A45713900FA15F4 /* Packages */,
 				1F50CE0A2A456EE000FA15F4 /* Products */,
 				1F50CE1C2A456FEC00FA15F4 /* Frameworks */,
 			);
@@ -104,7 +108,7 @@
 			);
 			name = NavigationFlowExample;
 			packageProductDependencies = (
-				1F50CE232A45715100FA15F4 /* NavigationFlow */,
+				1FB8AD102A459A9B001750C4 /* App */,
 			);
 			productName = NavigationFlowExample;
 			productReference = 1F50CE092A456EE000FA15F4 /* NavigationFlowExample.app */;
@@ -364,9 +368,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1F50CE232A45715100FA15F4 /* NavigationFlow */ = {
+		1FB8AD102A459A9B001750C4 /* App */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NavigationFlow;
+			productName = App;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

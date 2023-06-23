@@ -16,8 +16,7 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(
-            name: "NavigationFlow",
-            dependencies: []
+            name: "NavigationFlow"
         ),
         .testTarget(
             name: "NavigationFlowTests",
