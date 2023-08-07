@@ -12,7 +12,7 @@ struct CatalogItem: Identifiable {
 
 class CatalogViewModel: ObservableObject {
 
-    let navigation: Navigation<CatalogDestination>
+    let navigation: Navigation
 
     @Published var items: [CatalogItem] = [
         .init(name: "Item #1"),
@@ -30,15 +30,15 @@ class CatalogViewModel: ObservableObject {
     ]
 
 
-    init(navigation: Navigation<CatalogDestination>) {
+    init(navigation: Navigation) {
         self.navigation = navigation
     }
 
     func onProductDetail(_ name: String) {
-        navigation.navigate(.push(.productDetail(name)))
+        navigation.navigate(.push, for: CatalogDestination.productDetail(name))
     }
 
     func onFilters() {
-        navigation.navigate(.sheet(.filters))
+        navigation.navigate(.sheet, for: CatalogDestination.filters)
     }
 }

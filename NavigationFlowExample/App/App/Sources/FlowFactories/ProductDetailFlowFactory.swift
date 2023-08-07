@@ -9,7 +9,7 @@ struct ProductDetailFlowFactory {
         ProductDetailFlow(
             name: name,
             onGallery: {
-                GalleryFlowFactory().flow()
+                ProductDetailFlowFactory().flow(name: name)
             }
         )
     }

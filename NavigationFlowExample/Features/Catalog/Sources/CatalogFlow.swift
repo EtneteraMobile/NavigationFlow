@@ -2,7 +2,7 @@
 import SwiftUI
 import NavigationFlow
 
-enum CatalogDestination {
+enum CatalogDestination: NavigationDestination {
     case productDetail(String)
     case filters
 }
@@ -21,10 +21,10 @@ public struct CatalogFlow: Flow {
         self.onFilterFlow = onFilterFlow
     }
 
-    @ViewBuilder
     public func view() -> AnyView {
-        let navigation = Navigation<CatalogDestination> { destination in
+        let navigation = Navigation()
 
+        navigation.createView { (destination: CatalogDestination) in
             switch destination {
             case .productDetail(let name):
                 return onProductDetailFlow(name).view()
@@ -36,7 +36,7 @@ public struct CatalogFlow: Flow {
 
         let viewModel = CatalogViewModel(navigation: navigation)
 
-        CatalogView(viewModel: viewModel)
+        return CatalogView(viewModel: viewModel)
             .inRootNavigation(with: navigation)
     }
 }

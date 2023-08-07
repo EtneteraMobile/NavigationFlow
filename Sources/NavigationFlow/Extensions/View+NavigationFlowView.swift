@@ -2,8 +2,8 @@ import SwiftUI
 
 public extension View {
 
-    func inNavigation<Destination>(
-        with navigation: Navigation<Destination>
+    func inNavigation(
+        with navigation: Navigation
     ) -> AnyView {
         NavigationFlowView(navigation: navigation) {
             self
@@ -11,8 +11,8 @@ public extension View {
         .toAnyView()
     }
 
-    func inRootNavigation<Destination>(
-        with navigation: Navigation<Destination>
+    func inRootNavigation(
+        with navigation: Navigation
     ) -> AnyView {
         RootNavigationFlowView(navigation: navigation) {
             self

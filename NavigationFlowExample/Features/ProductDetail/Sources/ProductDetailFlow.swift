@@ -8,7 +8,7 @@
 import SwiftUI
 import NavigationFlow
 
-enum ProductDetailDestination {
+enum ProductDetailDestination: NavigationDestination {
     case gallery
 }
 
@@ -25,9 +25,10 @@ public struct ProductDetailFlow: Flow {
         self.onGallery = onGallery
     }
 
-    @ViewBuilder
     public func view() -> AnyView {
-        let navigation = Navigation<ProductDetailDestination> { destination in
+        let navigation = Navigation()
+
+        navigation.createView { (destination: ProductDetailDestination) in
             switch destination {
             case .gallery:
                 return onGallery().view()
@@ -36,7 +37,7 @@ public struct ProductDetailFlow: Flow {
 
         let viewModel = ProductDetailViewModel(navigation: navigation, name: name)
 
-        ProductDetailView(viewModel: viewModel)
+        return ProductDetailView(viewModel: viewModel)
             .inNavigation(with: navigation)
     }
 }

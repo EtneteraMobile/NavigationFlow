@@ -10,16 +10,16 @@ import NavigationFlow
 
 class ProductDetailViewModel: ObservableObject {
 
-    let navigation: Navigation<ProductDetailDestination>
+    let navigation: Navigation
 
     @Published var name: String
 
-    init(navigation: Navigation<ProductDetailDestination>, name: String) {
+    init(navigation: Navigation, name: String) {
         self.navigation = navigation
         self.name = name
     }
 
     func onGallery() {
-        navigation.navigate(.push(.gallery))
+        navigation.navigate(.push, for: ProductDetailDestination.gallery)
     }
 }

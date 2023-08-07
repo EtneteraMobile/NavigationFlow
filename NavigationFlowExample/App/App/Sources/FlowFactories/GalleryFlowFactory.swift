@@ -4,9 +4,9 @@ import SwiftUI
 import GalleryFeature
 import NavigationFlow
 
-struct GalleryFlowFactory {
-
-    func flow() -> Flow {
-        GalleryFlow()
-    }
-}
+//struct GalleryFlowFactory {
+//
+//    func flow() -> Flow {
+//        GalleryFlow()
+//    }
+//}

@@ -1,13 +1,15 @@
 import SwiftUI
 
-public class Navigation<Destination>: ObservableObject {
+public protocol NavigationDestination {}
+
+public class Navigation: ObservableObject {
 
     // MARK: - Navigation Action
 
     public enum NavigationAction: Identifiable {
-        case push(Destination)
-        case sheet(Destination)
-        case fullScreenCover(Destination)
+        case push
+        case sheet
+        case fullScreenCover
 
         public var id: String {
             String(describing: self)
@@ -24,23 +26,23 @@ public class Navigation<Destination>: ObservableObject {
 
     // MARK: - Private properties
 
-    private var pushingDestination: Destination?
-    private let onCreateView: ((Destination) -> AnyView)?
+    private var destination: NavigationDestination?
+    private var onCreateView: ((NavigationDestination) -> AnyView)?
 
 
     // MARK: - Initialization
 
-    public init(onCreateView: ((Destination) -> AnyView)? = nil) {
-        self.onCreateView = onCreateView
-    }
+    public init() {}
 
 
     // MARK: - Public actions
 
-    public func navigate(_ action: NavigationAction) {
+    public func navigate<Destination: NavigationDestination>(_ action: NavigationAction, for destination: Destination) {
+
+        self.destination = destination
+
         switch action {
-        case .push(let destination):
-            pushingDestination = destination
+        case .push:
             isPushing = true
         case .sheet:
             sheetNavigationAction = action
@@ -49,20 +51,34 @@ public class Navigation<Destination>: ObservableObject {
         }
     }
 
+    public func createView<Destination: NavigationDestination>(_ onDestination: @escaping (Destination) -> AnyView?) {
+        onCreateView = { destination in
+            guard let flowDestination = destination as? Destination else {
+                return EmptyView().toAnyView()
+            }
+
+            return onDestination(flowDestination) ?? EmptyView().toAnyView()
+        }
+    }
+
 
     // MARK: - Internal actions
 
     func createPushView() -> AnyView {
-        guard let destination = pushingDestination else {
+        guard let destination else {
             return EmptyView().toAnyView()
         }
 
         return onCreateView?(destination) ?? EmptyView().toAnyView()
     }
 
-    func createView(_ navigationAction: Navigation<Destination>.NavigationAction) -> AnyView {
+    func createView(_ navigationAction: Navigation.NavigationAction) -> AnyView {
+        guard let destination else {
+            return EmptyView().toAnyView()
+        }
+
         switch navigationAction {
-        case .sheet(let destination), .fullScreenCover(let destination):
+        case .sheet, .fullScreenCover:
             return onCreateView?(destination) ?? EmptyView().toAnyView()
         case .push:
             fatalError("\(#function) should not be used for pushing action!")

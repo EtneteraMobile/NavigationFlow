@@ -1,16 +1,16 @@
 import SwiftUI
 
-public struct NavigationFlowView<Content: View, Destination>: View {
+public struct NavigationFlowView<Content: View>: View {
 
     // MARK: - Properties
 
-    @ObservedObject private var navigation: Navigation<Destination>
+    @ObservedObject private var navigation: Navigation
     private let content: () -> Content
 
 
     // MARK: - Initialization
 
-    public init(navigation: Navigation<Destination>, @ViewBuilder content: @escaping () -> Content) {
+    public init(navigation: Navigation, @ViewBuilder content: @escaping () -> Content) {
         self.navigation = navigation
         self.content = content
     }
