@@ -2,13 +2,9 @@
 import SwiftUI
 import NavigationFlow
 
-enum CatalogDestination: Identifiable {
+enum CatalogDestination {
     case productDetail(String)
     case filters
-
-    var id: String {
-        String(describing: self)
-    }
 }
 
 public struct CatalogFlow: Flow {

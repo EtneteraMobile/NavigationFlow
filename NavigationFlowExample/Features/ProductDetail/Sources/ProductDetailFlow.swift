@@ -8,12 +8,8 @@
 import SwiftUI
 import NavigationFlow
 
-enum ProductDetailDestination: Identifiable {
+enum ProductDetailDestination {
     case gallery
-
-    var id: String {
-        String(describing: self)
-    }
 }
 
 public struct ProductDetailFlow: Flow {

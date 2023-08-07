@@ -2,7 +2,7 @@ import SwiftUI
 
 public extension View {
 
-    func inNavigation<Destination: Identifiable>(
+    func inNavigation<Destination>(
         with navigation: Navigation<Destination>
     ) -> AnyView {
         NavigationFlowView(navigation: navigation) {
@@ -11,7 +11,7 @@ public extension View {
         .toAnyView()
     }
 
-    func inRootNavigation<Destination: Identifiable>(
+    func inRootNavigation<Destination>(
         with navigation: Navigation<Destination>
     ) -> AnyView {
         RootNavigationFlowView(navigation: navigation) {

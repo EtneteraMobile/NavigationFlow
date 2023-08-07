@@ -1,6 +1,6 @@
 import SwiftUI
 
-public class Navigation<Destination: Identifiable>: ObservableObject {
+public class Navigation<Destination>: ObservableObject {
 
     // MARK: - Navigation Action
 

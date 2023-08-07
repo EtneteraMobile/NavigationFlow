@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct NavigationFlowView<Content: View, Destination: Identifiable>: View {
+public struct NavigationFlowView<Content: View, Destination>: View {
 
     // MARK: - Properties
 

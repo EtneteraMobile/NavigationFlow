@@ -2,12 +2,8 @@
 import SwiftUI
 import NavigationFlow
 
-enum FilterDestination: Identifiable {
+enum FilterDestination {
     case filterDetail(String)
-
-    var id: String {
-        String(describing: self)
-    }
 }
 
 public struct FilterFlow: Flow {
