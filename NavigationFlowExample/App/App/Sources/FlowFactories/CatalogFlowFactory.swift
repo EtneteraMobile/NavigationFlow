@@ -14,7 +14,7 @@ public struct CatalogFlowFactory {
                 ProductDetailFlowFactory().flow(store: store, name: name)
             },
             onFilterFlow: {
-                ProductDetailFlowFactory().flow(store: store, name: "name")
+                FilterFlowFactory().flow()
             }
         )
         .view()

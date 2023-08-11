@@ -2,17 +2,21 @@
 import SwiftUI
 import NavigationFlow
 
-//struct FilterDetailFlow: Flow {
-//
-//    let name: String
-//
-//    @ViewBuilder
-//    func view() -> AnyView {
-//        let navigation = Navigation<NoDestination>()
-//
-//        let viewModel = FilterDetailViewModel(navigation: navigation, name: name)
-//
-//        FilterDetailView(viewModel: viewModel)
-//            .inNavigation(with: navigation)
-//    }
-//}
+class FilterDetailFlow: Flow {
+
+    private let name: String
+
+    init(store: FlowStore, name: String) {
+        self.name = name
+
+        super.init(store: store)
+    }
+
+    override func view() -> AnyView {
+
+        let viewModel = FilterDetailViewModel(navigation: navigation, name: name)
+
+        return FilterDetailView(viewModel: viewModel)
+            .inNavigation(with: navigation)
+    }
+}

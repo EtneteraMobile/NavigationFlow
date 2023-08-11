@@ -8,19 +8,19 @@
 import Foundation
 import NavigationFlow
 
-//class GalleryViewModel: ObservableObject {
-//
-//    let navigation: Navigation<NoDestination>
-//
-//    init(navigation: Navigation<NoDestination>) {
-//        self.navigation = navigation
-//    }
-//
-//    func onPop() {
-//        // Pop action
-//    }
-//
-//    func onPopToRoot() {
-//        // Pop to root action
-//    }
-//}
+class GalleryViewModel: ObservableObject {
+
+    let navigation: Navigation
+
+    init(navigation: Navigation) {
+        self.navigation = navigation
+    }
+
+    func onPop() {
+        navigation.pop()
+    }
+
+    func onPopToRoot() {
+        navigation.popToRoot()
+    }
+}
