@@ -39,6 +39,6 @@ public class CatalogFlow: Flow {
         let viewModel = CatalogViewModel(navigation: navigation)
 
         return CatalogView(viewModel: viewModel)
-            .inRootNavigation(with: navigation)
+            .inNavigation(for: self)
     }
 }

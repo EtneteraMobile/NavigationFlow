@@ -23,6 +23,6 @@ public class FilterFlow: Flow {
         let viewModel = FilterViewModel(navigation: navigation)
 
         return FilterView(viewModel: viewModel)
-            .inRootNavigation(with: navigation)
+            .inNavigation(for: self)
     }
 }

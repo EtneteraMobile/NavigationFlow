@@ -9,6 +9,6 @@ public class GalleryFlow: Flow {
         let viewModel = GalleryViewModel(navigation: navigation)
 
         return GalleryView(viewModel: viewModel)
-            .inNavigation(with: navigation)
+            .inNavigation(for: self)
     }
 }

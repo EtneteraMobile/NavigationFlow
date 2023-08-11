@@ -40,7 +40,7 @@ public class ProductDetailFlow: Flow {
         let viewModel = ProductDetailViewModel(navigation: navigation, name: name)
 
         return ProductDetailView(viewModel: viewModel)
-            .inNavigation(with: navigation)
+            .inNavigation(for: self)
     }
 }
 

@@ -17,6 +17,6 @@ class FilterDetailFlow: Flow {
         let viewModel = FilterDetailViewModel(navigation: navigation, name: name)
 
         return FilterDetailView(viewModel: viewModel)
-            .inNavigation(with: navigation)
+            .inNavigation(for: self)
     }
 }

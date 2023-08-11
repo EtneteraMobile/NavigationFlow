@@ -1,23 +1,10 @@
 import SwiftUI
 
 public extension View {
-
-    func inNavigation(
-        with navigation: Navigation
-    ) -> AnyView {
-        NavigationFlowView(navigation: navigation) {
-            self
-        }
-        .toAnyView()
-    }
-
-    func inRootNavigation(
-        with navigation: Navigation
-    ) -> AnyView {
-        RootNavigationFlowView(navigation: navigation) {
-            self
-        }
-        .toAnyView()
+    func inNavigation(for flow: Flow) -> AnyView {
+        flow.store.parentFlow == nil
+            ? RootNavigationFlowView(navigation: flow.navigation) { self }.toAnyView()
+            : NavigationFlowView(navigation: flow.navigation) { self }.toAnyView()
     }
 }
 
