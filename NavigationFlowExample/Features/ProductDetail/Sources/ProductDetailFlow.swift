@@ -14,19 +14,22 @@ enum ProductDetailDestination: NavigationDestination {
 
 public struct ProductDetailFlow: Flow {
 
+    public let navigation: Navigation
+
     private let name: String
     private let onGallery: () -> Flow
 
     public init(
+        store: NavigationStore,
         name: String,
         onGallery: @escaping () -> Flow
     ) {
+        self.navigation = Navigation(store: store)
         self.name = name
         self.onGallery = onGallery
     }
 
     public func view() -> AnyView {
-        let navigation = Navigation()
 
         navigation.createView { (destination: ProductDetailDestination) in
             switch destination {

@@ -8,12 +8,15 @@ public struct CatalogFlowFactory {
     public init() {}
 
     public func view() -> some View {
-        CatalogFlow(
+        let store = NavigationStore()
+
+        return CatalogFlow(
+            store: store,
             onProductDetailFlow: { name in
-                ProductDetailFlowFactory().flow(name: name)
+                ProductDetailFlowFactory().flow(store: store, name: name)
             },
             onFilterFlow: {
-                ProductDetailFlowFactory().flow(name: "name")
+                ProductDetailFlowFactory().flow(store: store, name: "name")
             }
         )
         .view()

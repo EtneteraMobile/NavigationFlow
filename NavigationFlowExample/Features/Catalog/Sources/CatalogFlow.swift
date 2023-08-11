@@ -9,20 +9,21 @@ enum CatalogDestination: NavigationDestination {
 
 public struct CatalogFlow: Flow {
 
-
     private let onProductDetailFlow: (String) -> Flow
     private let onFilterFlow: () -> Flow
+    public let navigation: Navigation
 
     public init(
+        store: NavigationStore,
         onProductDetailFlow: @escaping (String) -> Flow,
         onFilterFlow: @escaping () -> Flow
     ) {
+        self.navigation = Navigation(store: store)
         self.onProductDetailFlow = onProductDetailFlow
         self.onFilterFlow = onFilterFlow
     }
 
     public func view() -> AnyView {
-        let navigation = Navigation()
 
         navigation.createView { (destination: CatalogDestination) in
             switch destination {

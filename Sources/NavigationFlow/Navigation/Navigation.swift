@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 public protocol NavigationDestination {}
 
@@ -26,13 +27,19 @@ public class Navigation: ObservableObject {
 
     // MARK: - Private properties
 
+//    private let store: NavigationStore
     private var destination: NavigationDestination?
     private var onCreateView: ((NavigationDestination) -> AnyView)?
+    private var cancellables = Set<AnyCancellable>()
 
 
     // MARK: - Initialization
 
-    public init() {}
+    public init(store: NavigationStore) {
+        self.store = store
+
+        setupStore()
+    }
 
 
     // MARK: - Public actions
@@ -49,6 +56,11 @@ public class Navigation: ObservableObject {
         case .fullScreenCover:
             fullScreenCoverNavigationAction = action
         }
+    }
+
+    public func pop() {
+        store.parent?.isPushing = false
+//        store.removeNavigation()
     }
 
     public func createView<Destination: NavigationDestination>(_ onDestination: @escaping (Destination) -> AnyView?) {
@@ -83,5 +95,21 @@ public class Navigation: ObservableObject {
         case .push:
             fatalError("\(#function) should not be used for pushing action!")
         }
+    }
+
+    // MARK: - Private actions
+
+    private func setupStore() {
+        $isPushing
+            .dropFirst()
+            .sink { [weak self] isPushing in
+            guard let self else { return }
+            if isPushing {
+                self.store.add(self)
+            } else {
+                self.store.removeAfter(self)
+            }
+        }
+        .store(in: &cancellables)
     }
 }

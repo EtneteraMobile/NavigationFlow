@@ -22,4 +22,8 @@ class ProductDetailViewModel: ObservableObject {
     func onGallery() {
         navigation.navigate(.push, for: ProductDetailDestination.gallery)
     }
+
+    func onPop() {
+        navigation.pop()
+    }
 }
