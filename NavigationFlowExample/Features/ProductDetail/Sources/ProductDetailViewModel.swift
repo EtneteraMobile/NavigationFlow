@@ -23,6 +23,10 @@ class ProductDetailViewModel: ObservableObject {
         navigation.navigate(.push, for: ProductDetailDestination.gallery)
     }
 
+    func onPopToRoot() {
+        navigation.popToRoot()
+    }
+
     func onPop() {
         navigation.pop()
     }

@@ -3,36 +3,25 @@
 import Foundation
 
 
-public class NavigationStore {
+public class FlowStore {
 
-    private var navigations: [Navigation] = []
+    var flows: [Flow] = []
 
     public init() {}
 
-    public func add(_ navigation: Navigation) {
-        navigations.append(navigation)
-        navigations.enumerated().forEach {
-            print("==- navigation \($0 + 1) \($1)")
-        }
+    func add(_ flow: Flow) {
+        flows.append(flow)
     }
 
-    public func rootNavigation() -> Navigation? {
-        navigations.first
+    var rootFlow: Flow? {
+        flows.first
     }
 
-    public func lastNavigation() -> Navigation? {
-        navigations.last
-    }
-
-    public var parent: Navigation? {
-        guard navigations.count >= 2 else {
+    var parentFlow: Flow? {
+        guard flows.count >= 2 else {
             return nil
         }
-        print("==- COUNT \(navigations.count), parent is on index \(navigations.count - 2)")
-        return navigations[navigations.count - 2]
-    }
 
-    public func removeAfter(_ navigation: Navigation) {
-
+        return flows[flows.count - 2]
     }
 }

@@ -7,31 +7,32 @@ enum CatalogDestination: NavigationDestination {
     case filters
 }
 
-public struct CatalogFlow: Flow {
+public class CatalogFlow: Flow {
 
     private let onProductDetailFlow: (String) -> Flow
     private let onFilterFlow: () -> Flow
-    public let navigation: Navigation
 
     public init(
-        store: NavigationStore,
+        store: FlowStore?,
         onProductDetailFlow: @escaping (String) -> Flow,
         onFilterFlow: @escaping () -> Flow
     ) {
-        self.navigation = Navigation(store: store)
         self.onProductDetailFlow = onProductDetailFlow
         self.onFilterFlow = onFilterFlow
+        super.init(store: store)
     }
 
-    public func view() -> AnyView {
+    override public func view() -> AnyView {
 
-        navigation.createView { (destination: CatalogDestination) in
+        navigation.createView { [weak self] (destination: CatalogDestination) in
+            guard let self else { return AnyView(EmptyView()) }
+
             switch destination {
             case .productDetail(let name):
-                return onProductDetailFlow(name).view()
+                return self.onProductDetailFlow(name).view()
 
             case .filters:
-                return onFilterFlow().view()
+                return self.onFilterFlow().view()
             }
         }
 

@@ -29,6 +29,11 @@ struct ProductDetailView: View {
                 viewModel.onPop()
             }
             .buttonStyle(.bordered)
+
+            Button("Pop to root") {
+                viewModel.onPopToRoot()
+            }
+            .buttonStyle(.bordered)
         }
         .navigationTitle("Product detail")
         .navigationBarTitleDisplayMode(.inline)
@@ -37,6 +42,6 @@ struct ProductDetailView: View {
 
 struct ProductDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetailView(viewModel: .init(navigation: .init(store: .init()), name: ""))
+        ProductDetailView(viewModel: .init(navigation: .init(), name: ""))
     }
 }

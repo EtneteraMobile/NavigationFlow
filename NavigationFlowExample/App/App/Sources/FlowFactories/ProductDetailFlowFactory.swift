@@ -5,7 +5,7 @@ import NavigationFlow
 
 struct ProductDetailFlowFactory {
 
-    func flow(store: NavigationStore, name: String) -> Flow {
+    func flow(store: FlowStore, name: String) -> Flow {
         ProductDetailFlow(
             store: store,
             name: name,

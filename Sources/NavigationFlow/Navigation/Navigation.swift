@@ -23,11 +23,12 @@ public class Navigation: ObservableObject {
     @Published var isPushing: Bool = false
     @Published var sheetNavigationAction: NavigationAction?
     @Published var fullScreenCoverNavigationAction: NavigationAction?
+    var onPop: (() -> Void)?
+    var onPopToRoot: (() -> Void)?
 
 
     // MARK: - Private properties
 
-//    private let store: NavigationStore
     private var destination: NavigationDestination?
     private var onCreateView: ((NavigationDestination) -> AnyView)?
     private var cancellables = Set<AnyCancellable>()
@@ -35,11 +36,7 @@ public class Navigation: ObservableObject {
 
     // MARK: - Initialization
 
-    public init(store: NavigationStore) {
-        self.store = store
-
-        setupStore()
-    }
+    public init() {}
 
 
     // MARK: - Public actions
@@ -58,9 +55,12 @@ public class Navigation: ObservableObject {
         }
     }
 
+    public func popToRoot() {
+        onPopToRoot?()
+    }
+    
     public func pop() {
-        store.parent?.isPushing = false
-//        store.removeNavigation()
+        onPop?()
     }
 
     public func createView<Destination: NavigationDestination>(_ onDestination: @escaping (Destination) -> AnyView?) {
@@ -77,7 +77,7 @@ public class Navigation: ObservableObject {
     // MARK: - Internal actions
 
     func createPushView() -> AnyView {
-        guard let destination else {
+        guard let destination, isPushing == true else {
             return EmptyView().toAnyView()
         }
 
@@ -95,21 +95,5 @@ public class Navigation: ObservableObject {
         case .push:
             fatalError("\(#function) should not be used for pushing action!")
         }
-    }
-
-    // MARK: - Private actions
-
-    private func setupStore() {
-        $isPushing
-            .dropFirst()
-            .sink { [weak self] isPushing in
-            guard let self else { return }
-            if isPushing {
-                self.store.add(self)
-            } else {
-                self.store.removeAfter(self)
-            }
-        }
-        .store(in: &cancellables)
     }
 }

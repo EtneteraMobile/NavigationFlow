@@ -31,6 +31,6 @@ struct CatalogView: View {
 
 struct CatalogView_Previews: PreviewProvider {
     static var previews: some View {
-        CatalogView(viewModel: .init(navigation: .init(store: .init())))
+        CatalogView(viewModel: .init(navigation: .init()))
     }
 }

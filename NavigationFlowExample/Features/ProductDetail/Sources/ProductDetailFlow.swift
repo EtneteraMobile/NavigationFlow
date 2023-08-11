@@ -12,29 +12,28 @@ enum ProductDetailDestination: NavigationDestination {
     case gallery
 }
 
-public struct ProductDetailFlow: Flow {
-
-    public let navigation: Navigation
+public class ProductDetailFlow: Flow {
 
     private let name: String
     private let onGallery: () -> Flow
 
     public init(
-        store: NavigationStore,
+        store: FlowStore?,
         name: String,
         onGallery: @escaping () -> Flow
     ) {
-        self.navigation = Navigation(store: store)
         self.name = name
         self.onGallery = onGallery
+        super.init(store: store)
     }
 
-    public func view() -> AnyView {
+    override public func view() -> AnyView {
 
-        navigation.createView { (destination: ProductDetailDestination) in
+        navigation.createView { [weak self] (destination: ProductDetailDestination) in
+            guard let self else { return AnyView(EmptyView()) }
             switch destination {
             case .gallery:
-                return onGallery().view()
+                return self.onGallery().view()
             }
         }
 
