@@ -1,10 +1,12 @@
 //
 import SwiftUI
+import Combine
 
 open class Flow {
 
     public let store: FlowStore
     public let navigation = Navigation()
+    private var cancellables = Set<AnyCancellable>()
 
     public init(store: FlowStore? = nil) {
         self.store = store ?? FlowStore()
@@ -19,7 +21,6 @@ open class Flow {
 
     private func addSelfToStore() {
         store.add(self)
-        print("==- Added new flow! Current count \(store.flows.count)")
         printAllFlows()
     }
 
@@ -31,33 +32,31 @@ open class Flow {
         navigation.onPopToRoot = { [weak self] in
             self?.handlePopToRoot()
         }
+
+        navigation
+            .$isPushing
+            .dropFirst()
+            .sink { [weak self] isPushing in
+            guard let self else { return }
+            if isPushing == false {
+                self.store.remove(after: self)
+                printAllFlows()
+            }
+        }.store(in: &cancellables)
     }
 
     private func handlePop() {
-        print("==- Poping to parent... Parent is \(store.parentFlow)")
         store.parentFlow?.navigation.isPushing = false
-
-        guard store.flows.count >= 2 else {
-            return
-        }
-
-        print("==- Removing last flow...")
-        store.flows.removeLast()
-
-        print("==- Flow count after poping \(store.flows.count)")
-        printAllFlows()
     }
 
     private func handlePopToRoot() {
-        print("==- Poping to root. Root is \(store.rootFlow)...")
-        store.rootFlow?.navigation.isPushing = false
-        let rangeToRemove = 1...store.flows.count - 1
+        store.flows.reversed().forEach { flow in
+            guard flow !== store.flows.last else {
+                return
+            }
 
-        print("==- Removing flows \(rangeToRemove)...")
-        store.flows.removeSubrange(rangeToRemove)
-
-        print("==- Flow count after pop to root \(store.flows.count)")
-        printAllFlows()
+            flow.navigation.isPushing = false
+        }
     }
 
     private func printAllFlows() {
