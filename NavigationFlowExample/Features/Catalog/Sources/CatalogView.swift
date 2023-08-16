@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CatalogView: View {
 
-    @StateObject var viewModel: CatalogViewModel
+    @ObservedObject var viewModel: CatalogViewModel
 
     var body: some View {
         List(viewModel.items) { item in

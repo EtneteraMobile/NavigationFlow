@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GalleryView: View {
 
-    @StateObject var viewModel: GalleryViewModel
+    @ObservedObject var viewModel: GalleryViewModel
 
     var body: some View {
         VStack(spacing: 20) {

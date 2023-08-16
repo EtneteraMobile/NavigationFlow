@@ -4,7 +4,7 @@ import NavigationFlow
 
 struct FilterDetailView: View {
 
-    @StateObject var viewModel: FilterDetailViewModel
+    @ObservedObject var viewModel: FilterDetailViewModel
 
     var body: some View {
         VStack {

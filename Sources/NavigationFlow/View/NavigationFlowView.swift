@@ -1,27 +1,19 @@
 import SwiftUI
 
-public struct NavigationFlowView<Content: View>: View {
+struct NavigationFlowView<Content: View>: View {
 
     // MARK: - Properties
 
-    @ObservedObject private var navigation: Navigation
-    private let content: () -> Content
-
-
-    // MARK: - Initialization
-
-    public init(navigation: Navigation, @ViewBuilder content: @escaping () -> Content) {
-        self.navigation = navigation
-        self.content = content
-    }
+    @ObservedObject var navigation: Navigation
+    let content: () -> Content
 
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         content()
-            .navigationDestination(isPresented: $navigation.isPushing, destination: navigation.createPushView)
-            .sheet(item: $navigation.sheetNavigationAction, content: navigation.createView)
-            .fullScreenCover(item: $navigation.fullScreenCoverNavigationAction, content: navigation.createView)
+            .navigationDestination(isPresented: $navigation.isPushing, destination: navigation.createView)
+            .sheet(isPresented: $navigation.isPresentingSheet, content: navigation.createView)
+            .fullScreenCover(isPresented: $navigation.isPresentingFullScreenCover, content: navigation.createView)
     }
 }

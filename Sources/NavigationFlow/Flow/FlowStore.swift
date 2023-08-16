@@ -5,12 +5,12 @@ import Foundation
 
 public class FlowStore {
 
-    var flows: [Flow] = []
+    // MARK: - Properties
 
+    private var flows: [Flow] = []
     var rootFlow: Flow? {
         flows.first
     }
-
     var parentFlow: Flow? {
         guard flows.count >= 2 else {
             return nil
@@ -18,8 +18,15 @@ public class FlowStore {
 
         return flows[flows.count - 2]
     }
+    var lastFlow: Flow? {
+        flows.last
+    }
+
+    // MARK: - Initialization
 
     public init() {}
+
+    // MARK: - Actions
 
     func add(_ flow: Flow) {
         flows.append(flow)
@@ -33,5 +40,32 @@ public class FlowStore {
             return
         }
         flows.remove(at: index + 1)
+    }
+
+    func handlePopToRoot() {
+        flows.reversed().forEach { flow in
+            guard flow !== flows.last else {
+                return
+            }
+
+            flow.navigation.isPushing = false
+        }
+    }
+
+    func handlePop() {
+        parentFlow?.navigation.isPushing = false
+    }
+
+    func handleDismiss() {
+        lastFlow?.navigation.isPresentingSheet = false
+        lastFlow?.navigation.isPresentingFullScreenCover = false
+    }
+
+    func printAllFlows() {
+        print("==- ==============")
+        flows.forEach {
+            print("==- \($0)")
+        }
+        print("==- ==============")
     }
 }

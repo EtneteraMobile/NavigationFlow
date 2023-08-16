@@ -29,4 +29,8 @@ class FilterViewModel: ObservableObject {
     func onFilterDetail(for name: String) {
         navigation.navigate(.push, for: FilterDestination.filterDetail(name))
     }
+
+    func onDismiss() {
+        navigation.dismiss()
+    }
 }

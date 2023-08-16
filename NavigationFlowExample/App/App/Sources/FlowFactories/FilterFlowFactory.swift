@@ -6,7 +6,7 @@ import NavigationFlow
 
 struct FilterFlowFactory {
 
-    func flow() -> Flow {
-        FilterFlow()
+    func flow(presentingStore: FlowStore?) -> Flow {
+        FilterFlow(presentingStore: presentingStore)
     }
 }

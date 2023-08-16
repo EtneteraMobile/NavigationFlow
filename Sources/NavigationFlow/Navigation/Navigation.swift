@@ -20,12 +20,12 @@ public class Navigation: ObservableObject {
 
     // MARK: - Internal properties
 
-    @Published var isPushing: Bool = false
-    @Published var sheetNavigationAction: NavigationAction?
-    @Published var fullScreenCoverNavigationAction: NavigationAction?
+    @Published var isPushing = false
+    @Published var isPresentingSheet = false
+    @Published var isPresentingFullScreenCover = false
     var onPop: (() -> Void)?
     var onPopToRoot: (() -> Void)?
-
+    var onDismiss: (() -> Void)?
 
     // MARK: - Private properties
 
@@ -49,9 +49,9 @@ public class Navigation: ObservableObject {
         case .push:
             isPushing = true
         case .sheet:
-            sheetNavigationAction = action
+            isPresentingSheet = true
         case .fullScreenCover:
-            fullScreenCoverNavigationAction = action
+            isPresentingFullScreenCover = true
         }
     }
 
@@ -61,6 +61,10 @@ public class Navigation: ObservableObject {
     
     public func pop() {
         onPop?()
+    }
+
+    public func dismiss() {
+        onDismiss?()
     }
 
     public func createView<Destination: NavigationDestination>(_ onDestination: @escaping (Destination) -> AnyView?) {
@@ -76,24 +80,11 @@ public class Navigation: ObservableObject {
 
     // MARK: - Internal actions
 
-    func createPushView() -> AnyView {
-        guard let destination, isPushing == true else {
+    func createView() -> AnyView {
+        guard let destination, (isPushing || isPresentingSheet || isPresentingFullScreenCover) else {
             return EmptyView().toAnyView()
         }
 
         return onCreateView?(destination) ?? EmptyView().toAnyView()
-    }
-
-    func createView(_ navigationAction: Navigation.NavigationAction) -> AnyView {
-        guard let destination else {
-            return EmptyView().toAnyView()
-        }
-
-        switch navigationAction {
-        case .sheet, .fullScreenCover:
-            return onCreateView?(destination) ?? EmptyView().toAnyView()
-        case .push:
-            fatalError("\(#function) should not be used for pushing action!")
-        }
     }
 }

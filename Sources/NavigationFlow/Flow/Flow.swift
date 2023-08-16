@@ -4,66 +4,62 @@ import Combine
 
 open class Flow {
 
+    // MARK: - Properties
+
     public let store: FlowStore
     public let navigation = Navigation()
     private var cancellables = Set<AnyCancellable>()
+    private let presentingStore: FlowStore?
 
-    public init(store: FlowStore? = nil) {
+    // MARK: - Initialization
+
+    public init(store: FlowStore? = nil, presentingStore: FlowStore? = nil) {
         self.store = store ?? FlowStore()
+        self.presentingStore = presentingStore
 
         addSelfToStore()
         bindNavigationCallbacks()
     }
 
+    // MARK: - Open actions
+
     open func view() -> AnyView {
         fatalError("Implement in Flow")
     }
 
+    // MARK: - Private actions
+
     private func addSelfToStore() {
         store.add(self)
-        printAllFlows()
+        store.printAllFlows()
     }
 
     private func bindNavigationCallbacks() {
         navigation.onPop = { [weak self] in
-            self?.handlePop()
+            self?.store.handlePop()
         }
 
         navigation.onPopToRoot = { [weak self] in
-            self?.handlePopToRoot()
+            self?.store.handlePopToRoot()
+        }
+
+        navigation.onDismiss = { [weak self] in
+            self?.presentingStore?.handleDismiss()
         }
 
         navigation
             .$isPushing
             .dropFirst()
             .sink { [weak self] isPushing in
-            guard let self else { return }
-            if isPushing == false {
-                self.store.remove(after: self)
-                printAllFlows()
+                guard let self else {
+                    return
+                }
+
+                if isPushing == false {
+                    self.store.remove(after: self)
+                    store.printAllFlows()
+                }
             }
-        }.store(in: &cancellables)
-    }
-
-    private func handlePop() {
-        store.parentFlow?.navigation.isPushing = false
-    }
-
-    private func handlePopToRoot() {
-        store.flows.reversed().forEach { flow in
-            guard flow !== store.flows.last else {
-                return
-            }
-
-            flow.navigation.isPushing = false
-        }
-    }
-
-    private func printAllFlows() {
-        print("==- ==============")
-        store.flows.forEach {
-            print("==- \($0)")
-        }
-        print("==- ==============")
+            .store(in: &cancellables)
     }
 }

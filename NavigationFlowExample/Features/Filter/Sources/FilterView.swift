@@ -4,12 +4,22 @@ import NavigationFlow
 
 struct FilterView: View {
 
-    @StateObject var viewModel: FilterViewModel
+    @ObservedObject var viewModel: FilterViewModel
 
     var body: some View {
         List(viewModel.filters) { item in
             Button(item.name) {
                 viewModel.onFilterDetail(for: item.name)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.onDismiss()
+                } label: {
+                    Image(systemName: "x.circle")
+                }
+
             }
         }
         .navigationTitle("Filters")

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
 
-    @StateObject var viewModel: ProductDetailViewModel
+    @ObservedObject var viewModel: ProductDetailViewModel
 
     var body: some View {
         VStack(spacing: 20) {
