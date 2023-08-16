@@ -35,8 +35,8 @@ open class Flow {
     }
 
     private func bindNavigationCallbacks() {
-        navigation.onPop = { [weak self] in
-            self?.store.handlePop()
+        navigation.onPop = { [weak self] last in
+            self?.store.handlePop(last: last)
         }
 
         navigation.onPopToRoot = { [weak self] in

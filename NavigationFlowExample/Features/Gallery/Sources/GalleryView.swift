@@ -18,12 +18,17 @@ struct GalleryView: View {
                 .scaledToFit()
                 .frame(height: 200)
 
-            Button("Go back Product Detail") {
+            Button("Pop") {
                 viewModel.onPop()
             }
             .buttonStyle(.bordered)
 
-            Button("Go back to Catalog") {
+            Button("Pop last two") {
+                viewModel.onPopLastTwo()
+            }
+            .buttonStyle(.bordered)
+
+            Button("Pop to root") {
                 viewModel.onPopToRoot()
             }
             .buttonStyle(.bordered)

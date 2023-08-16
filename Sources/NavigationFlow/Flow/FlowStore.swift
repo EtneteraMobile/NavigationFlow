@@ -52,8 +52,17 @@ public class FlowStore {
         }
     }
 
-    func handlePop() {
-        parentFlow?.navigation.isPushing = false
+    func handlePop(last: Int) {
+        guard flows.count >= last else {
+            return
+        }
+        flows.reversed().enumerated().forEach { flow in
+            guard flow.offset <= last else {
+                return
+            }
+
+            flow.element.navigation.isPushing = false
+        }
     }
 
     func handleDismiss() {

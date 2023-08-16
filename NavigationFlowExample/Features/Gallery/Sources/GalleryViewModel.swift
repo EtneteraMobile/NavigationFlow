@@ -20,6 +20,10 @@ class GalleryViewModel: ObservableObject {
         navigation.pop()
     }
 
+    func onPopLastTwo() {
+        navigation.pop(last: 2)
+    }
+
     func onPopToRoot() {
         navigation.popToRoot()
     }

@@ -23,7 +23,7 @@ public class Navigation: ObservableObject {
     @Published var isPushing = false
     @Published var isPresentingSheet = false
     @Published var isPresentingFullScreenCover = false
-    var onPop: (() -> Void)?
+    var onPop: ((Int) -> Void)?
     var onPopToRoot: (() -> Void)?
     var onDismiss: (() -> Void)?
 
@@ -59,8 +59,8 @@ public class Navigation: ObservableObject {
         onPopToRoot?()
     }
     
-    public func pop() {
-        onPop?()
+    public func pop(last: Int = 1) {
+        onPop?(last)
     }
 
     public func dismiss() {
