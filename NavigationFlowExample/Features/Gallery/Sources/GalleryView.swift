@@ -32,6 +32,21 @@ struct GalleryView: View {
                 viewModel.onPopToRoot()
             }
             .buttonStyle(.bordered)
+
+            Button("Switch to first tab") {
+                viewModel.onSwitchTab(0)
+            }
+            .buttonStyle(.bordered)
+
+            Button("Switch to second tab") {
+                viewModel.onSwitchTab(1)
+            }
+            .buttonStyle(.bordered)
+
+            Button("Switch to third tab") {
+                viewModel.onSwitchTab(2)
+            }
+            .buttonStyle(.bordered)
         }
         .navigationTitle("Gallery")
     }

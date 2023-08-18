@@ -47,6 +47,10 @@ open class Flow {
             self?.presentingStore?.handleDismiss()
         }
 
+        navigation.onTabSelection = { [weak self] tabIndex in
+            self?.store.selectTab(tabIndex)
+        }
+
         navigation
             .$isPushing
             .dropFirst()

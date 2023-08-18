@@ -27,4 +27,8 @@ class GalleryViewModel: ObservableObject {
     func onPopToRoot() {
         navigation.popToRoot()
     }
+
+    func onSwitchTab(_ index: Int) {
+        navigation.selectTab(index)
+    }
 }

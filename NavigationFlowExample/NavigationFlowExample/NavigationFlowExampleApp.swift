@@ -11,23 +11,29 @@ import NavigationFlow
 
 @main
 struct NavigationFlowExampleApp: App {
+
+    @State var selectedTab = 0
+
     var body: some Scene {
         WindowGroup {
-            TabView {
-                CatalogFlowFactory().view(store: FlowStore())
+            TabView(selection: $selectedTab) {
+                CatalogFlowFactory().view(store: FlowStore(selectedTab: $selectedTab))
                     .tabItem {
                         Label("Catalog 1", systemImage: "book")
                     }
+                    .tag(0)
 
-                CatalogFlowFactory().view(store: FlowStore())
+                CatalogFlowFactory().view(store: FlowStore(selectedTab: $selectedTab))
                     .tabItem {
                         Label("Catalog 2", systemImage: "book")
                     }
+                    .tag(1)
 
-                CatalogFlowFactory().view(store: FlowStore())
+                CatalogFlowFactory().view(store: FlowStore(selectedTab: $selectedTab))
                     .tabItem {
                         Label("Catalog 3", systemImage: "book")
                     }
+                    .tag(2)
             }
         }
     }

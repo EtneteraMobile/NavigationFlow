@@ -26,6 +26,7 @@ public class Navigation: ObservableObject {
     var onPop: ((Int) -> Void)?
     var onPopToRoot: (() -> Void)?
     var onDismiss: (() -> Void)?
+    var onTabSelection: ((Int) -> Void)?
 
     // MARK: - Private properties
 
@@ -65,6 +66,10 @@ public class Navigation: ObservableObject {
 
     public func dismiss() {
         onDismiss?()
+    }
+
+    public func selectTab(_ tabIndex: Int) {
+        onTabSelection?(tabIndex)
     }
 
     public func createView<Destination: NavigationDestination>(_ onDestination: @escaping (Destination) -> AnyView?) {

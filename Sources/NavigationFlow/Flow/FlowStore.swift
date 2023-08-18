@@ -1,13 +1,14 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 public class FlowStore {
 
     // MARK: - Properties
 
     private var flows: [Flow] = []
+    private var selectedTab: Binding<Int>?
     var rootFlow: Flow? {
         flows.first
     }
@@ -24,7 +25,9 @@ public class FlowStore {
 
     // MARK: - Initialization
 
-    public init() {}
+    public init(selectedTab: Binding<Int>? = nil) {
+        self.selectedTab = selectedTab
+    }
 
     // MARK: - Actions
 
@@ -68,6 +71,10 @@ public class FlowStore {
     func handleDismiss() {
         lastFlow?.navigation.isPresentingSheet = false
         lastFlow?.navigation.isPresentingFullScreenCover = false
+    }
+
+    func selectTab(_ tabIndex: Int) {
+        selectedTab?.wrappedValue = tabIndex
     }
 
     func printAllFlows() {
